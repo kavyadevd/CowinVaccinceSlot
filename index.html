@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <title>Vaccine Date Check</title>
+   </head>
+   <body>
+      <div>
+         <label id="lblError" type="text">
+      </div>
+      <section>
+         <h1>Vaccine Date Check</h1>
+         <div style="padding:1%;text-align-last: center;display:grid;grid-auto-flow: column;" class="flex">
+            <div class="svg-wrapper" onclick="CallAPI(event);">
+               <svg height="40" width="150">
+                  <rect id="shape" height="40" width="150" />
+                  <div id="text">
+                     <a href=""><span class="spot"></span>Refresh</a>
+                  </div>
+               </svg>
+            </div>
+            <input type='text' class="svg-wrapper green InputText" id='District' placeholder='District ID' value="389">
+            <!-- <input type='text' class="svg-wrapper green InputText" id='District' placeholder='Date' value="31-03-2021"> -->
+            <div id="reportrange"  class="InputText pull-left" style="width:fit-content;">
+               <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>&nbsp;
+               <span></span> <b class="caret"></b>
+            </div>
+         </div>
+         <div class="tbl-header">
+            <table cellpadding="0" cellspacing="0" border="0">
+               <thead>
+                  <tr>
+                     <th>Available</th>
+                     <th>Date</th>
+                     <th>Age</th>
+                     <th>Vaccine</th>
+                     <th colspan="3">Slots</th>
+                     <th colspan="2">Name</th>
+                  </tr>
+               </thead>
+            </table>
+         </div>
+         <div class="tbl-content">
+            <table cellpadding="0" cellspacing="0" border="0">
+               <tbody id="table">                   
+               </tbody>
+            </table>
+         </div>
+      </section>
+      <style>
+          #reportrange{
+            padding: 10px 10px 0 10px!important;
+          }
+         h1{
+         font-size: 30px;
+         color: #fff;
+         text-transform: uppercase;
+         font-weight: 300;
+         text-align: center;
+         margin-bottom: 15px;
+         }
+         table{
+         width:100%;
+         table-layout: fixed;
+         }
+         .tbl-header{
+         background-color: rgba(255,255,255,0.3);
+         }
+         .tbl-content{
+         overflow-x:auto;
+         margin-top: 0px;
+         border: 1px solid rgba(255,255,255,0.3);
+         }
+         .tbl-header th{
+         padding: 20px 15px;
+         text-align: left;
+         font-weight: 500;
+         font-size: 12px;
+         color: #fff;
+         text-transform: uppercase;
+         }
+         .tbl-content td{
+         padding: 15px;
+         text-align: left;
+         vertical-align:middle;
+         font-weight: 300;
+         font-size: 12px;
+         color: #fff;
+         border-bottom: solid 1px rgba(255,255,255,0.1);
+         }
+         /* demo styles */
+         @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,300,700);
+         body{
+         background: -webkit-linear-gradient(left, #25c481, #25b7c4);
+         background: linear-gradient(to right, #25c481, #25b7c4);
+         font-family: 'Roboto', sans-serif;
+         }
+         section{
+         margin: 10px;
+         }
+         /* follow me template */
+         .divA {
+         margin-top: 40px;
+         padding: 10px;
+         clear: left;
+         text-align: center;
+         font-size: 10px;
+         font-family: arial;
+         color: #fff;
+         }
+         .divA i {
+         font-style: normal;
+         color: #F50057;
+         font-size: 14px;
+         position: relative;
+         top: 2px;
+         }
+         .divA a {
+         color: #fff;
+         text-decoration: none;
+         }
+         .divA a:hover {
+         text-decoration: underline;
+         }
+         /* for custom scrollbar for webkit browser*/
+         ::-webkit-scrollbar {
+         width: 6px;
+         } 
+         ::-webkit-scrollbar-track {
+         -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+         } 
+         ::-webkit-scrollbar-thumb {
+         -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+         }
+      </style>
+      <style>
+         .spot {
+         position: absolute;
+         width: 100%;
+         height: 100%;
+         top: 0;
+         left: 0;
+         }
+         /*
+         This is the outer svg wrapper that the SVG itself will 
+         fill. Multiple svg-wrapper classes can be put side by side.
+         */
+         .svg-wrapper {
+         margin-top: 0;
+         position: relative;
+         width: 150px;
+         /*make sure to use same height/width as in the html*/
+         height: 40px;
+         display: inline-block;
+         border-radius: 3px;
+         margin-left: 5px;
+         margin-right: 5px
+         }
+         #shape {
+         stroke-width: 6px;
+         fill: transparent;
+         stroke: #009FFD;
+         stroke-dasharray: 85 400;
+         stroke-dashoffset: -220;
+         transition: 1s all ease;
+         }
+         #text {
+         margin-top: -35px;
+         text-align: center;
+         }
+         #text a {
+         color: white;
+         text-decoration: none;
+         font-weight: 100;
+         font-size: 1.1em;
+         }
+         .svg-wrapper:hover #shape {
+         stroke-dasharray: 50 0;
+         stroke-width: 3px;
+         stroke-dashoffset: 0;
+         stroke: #06D6A0;
+         }
+         .svg-wrapper:hover{
+         background-color: rgba(255,255,255,0.3);
+         }
+         /* Input Field */
+         .green {
+         caret-color: green;
+         }
+         .InputText {
+         color: #fff;
+         background-color: #33614e;
+         width: 6em;
+         padding: 0 10px 0 10px;
+         border-radius: 3px;
+         font-size: 18px;
+         border: 3px solid #16a085;
+         }
+         /* Placeholder Text */
+         ::placeholder {
+         /* Chrome, Firefox, Opera, Safari 10.1+ */
+         color: #eee;
+         opacity: 1; /* Firefox */
+         }
+      </style>
+      <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+      <script type="text/javascript" src="moment.min.js"></script>
+      <link rel="stylesheet" type="text/css" src="/bootstrap/css/bootstrap.css" />
+      <!-- Include Date Range Picker -->
+      <script type="text/javascript" src="daterangepicker.js"></script>
+      <link rel="stylesheet" type="text/css" href="daterangepicker.css" />
+      <script src="index.js"></script>
+   </body>
+</html>
